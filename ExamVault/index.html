@@ -9,7 +9,7 @@
 <title>Question Paper Portal</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+<link rel="stylesheet" href="cursor.css">
 <style>
 
 *{
@@ -51,58 +51,6 @@ body{
     position:relative;
     transition:0.4s;
     cursor:none;
-}
-
-/* CUSTOM CURSOR */
-
-.cursor{
-
-    width:22px;
-    height:22px;
-
-    border:2px solid var(--primary);
-
-    border-radius:50%;
-
-    position:fixed;
-
-    transform:translate(-50%,-50%);
-
-    pointer-events:none;
-
-    z-index:99999;
-}
-
-/* CURSOR TRAIL */
-
-.trail{
-
-    width:10px;
-    height:10px;
-
-    background:var(--primary);
-
-    border-radius:50%;
-
-    position:fixed;
-
-    transform:translate(-50%,-50%);
-
-    pointer-events:none;
-
-    opacity:0.4;
-
-    z-index:9999;
-
-    animation:fadeOut 0.6s linear forwards;
-}
-
-@keyframes fadeOut{
-
-    to{
-        opacity:0;
-        transform:translate(-50%,-50%) scale(2);
-    }
 }
 
 /* BACKGROUND GLOW */
@@ -565,8 +513,6 @@ body::after{
 
 <body>
 
-<div class="cursor" id="cursor"></div>
-
 <div class="pattern"></div>
 
 <!-- HEADER -->
@@ -820,32 +766,7 @@ window.onload = () => {
     }
 };
 
-/* CURSOR */
-
-const cursor =
-document.getElementById("cursor");
-
-document.addEventListener("mousemove",(e)=>{
-
-    cursor.style.left = e.clientX + "px";
-    cursor.style.top = e.clientY + "px";
-
-    const trail =
-    document.createElement("div");
-
-    trail.className = "trail";
-
-    trail.style.left = e.clientX + "px";
-    trail.style.top = e.clientY + "px";
-
-    document.body.appendChild(trail);
-
-    setTimeout(()=>{
-        trail.remove();
-    },600);
-});
-
 </script>
-
+<script src="cursor.js"></script>
 </body>
 </html>

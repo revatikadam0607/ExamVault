@@ -1,0 +1,232 @@
+/* =========================================================
+   EXAMVAULT — SCANNER CURSOR
+   A document-scanner inspired cursor for desktop pointers.
+   ========================================================= */
+
+html,
+body {
+    cursor: none !important;
+}
+
+.ev-scanner,
+.ev-scanner-dot,
+.ev-scanner-glow,
+.ev-scanner-label,
+.ev-scanner-particle {
+    position: fixed;
+    pointer-events: none;
+}
+
+.ev-scanner {
+    top: 0;
+    left: 0;
+    width: 42px;
+    height: 42px;
+    z-index: 999999;
+    transform: translate3d(-50%, -50%, 0);
+    transition:
+        width .25s cubic-bezier(.2,.8,.2,1),
+        height .25s cubic-bezier(.2,.8,.2,1),
+        opacity .2s ease,
+        filter .25s ease;
+}
+
+.ev-scanner::before,
+.ev-scanner::after {
+    content: "";
+    position: absolute;
+    inset: 3px;
+    border-radius: 8px;
+    background:
+        linear-gradient(var(--primary, #2563eb), var(--primary, #2563eb)) left top / 11px 1.5px no-repeat,
+        linear-gradient(var(--primary, #2563eb), var(--primary, #2563eb)) left top / 1.5px 11px no-repeat,
+        linear-gradient(var(--primary, #2563eb), var(--primary, #2563eb)) right top / 11px 1.5px no-repeat,
+        linear-gradient(var(--primary, #2563eb), var(--primary, #2563eb)) right top / 1.5px 11px no-repeat,
+        linear-gradient(var(--primary, #2563eb), var(--primary, #2563eb)) left bottom / 11px 1.5px no-repeat,
+        linear-gradient(var(--primary, #2563eb), var(--primary, #2563eb)) left bottom / 1.5px 11px no-repeat,
+        linear-gradient(var(--primary, #2563eb), var(--primary, #2563eb)) right bottom / 11px 1.5px no-repeat,
+        linear-gradient(var(--primary, #2563eb), var(--primary, #2563eb)) right bottom / 1.5px 11px no-repeat;
+    opacity: .9;
+}
+
+.ev-scanner::after {
+    inset: 9px;
+    opacity: .16;
+    animation: evScannerRotate 4s linear infinite;
+}
+
+.ev-scanner.is-hovering {
+    width: 58px;
+    height: 58px;
+    filter: drop-shadow(0 0 8px color-mix(in srgb, var(--primary, #2563eb) 35%, transparent));
+}
+
+.ev-scanner.is-paper {
+    width: 64px;
+    height: 64px;
+}
+
+.ev-scanner.is-clicking {
+    width: 30px;
+    height: 30px;
+}
+
+.ev-scanner-dot {
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 5px;
+    z-index: 1000000;
+    border-radius: 50%;
+    background: var(--primary, #2563eb);
+    transform: translate3d(-50%, -50%, 0);
+    box-shadow:
+        0 0 7px var(--primary, #2563eb),
+        0 0 18px var(--primary, #2563eb);
+    transition: width .2s ease, height .2s ease;
+}
+
+.ev-scanner.is-hovering + .ev-scanner-dot {
+    width: 7px;
+    height: 7px;
+}
+
+.ev-scanner-line {
+    position: absolute;
+    left: 9px;
+    right: 9px;
+    top: 50%;
+    height: 1px;
+    overflow: hidden;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--primary, #2563eb),
+        transparent
+    );
+    opacity: .75;
+    animation: evScannerSweep 1.8s ease-in-out infinite;
+}
+
+.ev-scanner-glow {
+    top: 0;
+    left: 0;
+    width: 105px;
+    height: 105px;
+    z-index: 999990;
+    border-radius: 50%;
+    background: var(--primary, #2563eb);
+    opacity: .055;
+    filter: blur(28px);
+    transform: translate3d(-50%, -50%, 0);
+}
+
+.ev-scanner-label {
+    top: 0;
+    left: 0;
+    z-index: 999998;
+    padding: 5px 9px;
+    border: 1px solid color-mix(in srgb, var(--primary, #2563eb) 55%, transparent);
+    border-radius: 999px;
+    background: rgba(5, 10, 20, .78);
+    color: var(--primary, #2563eb);
+    font: 700 9px/1 Poppins, sans-serif;
+    letter-spacing: 1.5px;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translate3d(26px, 22px, 0) scale(.8);
+    transition: opacity .18s ease, transform .18s ease;
+    backdrop-filter: blur(8px);
+}
+
+.ev-scanner-label.visible {
+    opacity: 1;
+    transform: translate3d(26px, 22px, 0) scale(1);
+}
+
+.ev-scanner-particle {
+    width: 2px;
+    height: 2px;
+    z-index: 999995;
+    border-radius: 50%;
+    background: var(--primary, #2563eb);
+    box-shadow: 0 0 5px var(--primary, #2563eb);
+    animation: evScannerParticle .42s ease-out forwards;
+}
+
+.ev-scanner-ripple {
+    position: fixed;
+    width: 12px;
+    height: 12px;
+    z-index: 999997;
+    border: 1px solid var(--primary, #2563eb);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate3d(-50%, -50%, 0);
+    animation: evScannerRipple .55s cubic-bezier(.2,.8,.2,1) forwards;
+}
+
+@keyframes evScannerSweep {
+    0%, 100% { transform: scaleX(.25); opacity: .1; }
+    50% { transform: scaleX(1); opacity: .9; }
+}
+
+@keyframes evScannerRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes evScannerParticle {
+    from {
+        opacity: .7;
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translate3d(var(--dx), var(--dy), 0) scale(.15);
+    }
+}
+
+@keyframes evScannerRipple {
+    from {
+        opacity: .85;
+        width: 12px;
+        height: 12px;
+        box-shadow: 0 0 0 0 color-mix(in srgb, var(--primary, #2563eb) 30%, transparent);
+    }
+    to {
+        opacity: 0;
+        width: 82px;
+        height: 82px;
+        box-shadow: 0 0 0 12px transparent;
+    }
+}
+
+@media (hover: none), (pointer: coarse) {
+    html,
+    body {
+        cursor: auto !important;
+    }
+
+    .ev-scanner,
+    .ev-scanner-dot,
+    .ev-scanner-glow,
+    .ev-scanner-label,
+    .ev-scanner-particle {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ev-scanner::after,
+    .ev-scanner-line,
+    .ev-scanner-particle,
+    .ev-scanner-ripple {
+        animation: none;
+    }
+
+    .ev-scanner,
+    .ev-scanner-label {
+        transition: none;
+    }
+}

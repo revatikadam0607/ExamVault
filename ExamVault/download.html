@@ -3,7 +3,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Question Paper Portal</title>
-
+<link rel="stylesheet" href="cursor.css">
 <style>
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
@@ -375,11 +375,6 @@ function showSemesters(dep){
         div.onclick = () => {
             window.open(data[dep][sem], "_blank");
 
-            // optional: recently viewed
-            let recent = JSON.parse(localStorage.getItem("recent")) || [];
-            recent.unshift(dep + " - " + sem);
-            recent = [...new Set(recent)].slice(0,5);
-            localStorage.setItem("recent", JSON.stringify(recent));
         };
 
         container.appendChild(div);
@@ -408,6 +403,6 @@ document.getElementById("search").addEventListener("input", function(){
 /* INIT */
 showDepartments();
 </script>
-
+<script src="cursor.js"></script>
 </body>
 </html>
